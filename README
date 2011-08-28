@@ -1,0 +1,23 @@
+Pollenizer Facebook test (v.0.1)
+================================
+
+This is a demonstration of loading images from Flickr using their API and showing them on the page 5 at a time.
+
+The code is build using:
+- JQuery
+- PHP
+- CSS
+- PHP Fat Free Framework (http://fatfree.sourceforge.net/)
+
+Caching is handled within the framework and so does not require any long term MySQL backend.
+
+
+Unit testing
+------------
+
+Due to a glitch in my machine, I've not had time to get phpunit installed correctly and run the tests, but have written the core unit test for:
+- Keyword exists
+- Keyword passed valiation
+- Page number is numeric
+- Page number exists
+- Search function returns a result
