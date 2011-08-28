@@ -1,0 +1,31 @@
+<F3:check if="{{ !@ajax}}">
+    <F3:true>
+        <form name="flickr_search" id="flickr_search" method="get" action="{{ @BASE }}" >
+            <F3:check if="{{ @message }}">
+                <p><span class="fail">{{ @message }}</span></p>
+            </F3:check>
+            <label for="keyword">Keyword</label>
+            <input type="text" name="keyword" id="keyword" value="{{ htmlspecialchars(@GET.keyword) }}" size="60"/> <input type="submit" value="Submit"/>
+        </form><p />
+	</F3:true></F3:check>
+
+<F3:check if="{{ @results}}">
+	<F3:true>
+    	<div id="page_results">
+            <dl>
+                <F3:repeat group="{{ @results.photos.photo }}" key="{{ @key }}" value="{{ @item }}">
+                    <dt><h2 class="title">{{ htmlspecialchars(@item.title) }}</h2></dt>
+                    <dd>
+                    	<a href="http://www.flickr.com/photos/{{ @item.owner }}/{{ @item.id }}/" title="{{ htmlspecialchars(@item.title) }}" rel="Lightbox-flickr" target="_blank"><img src="http://farm{{ @item.farm }}.static.flickr.com/{{ @item.server }}/{{ @item.id }}_{{ @item.secret }}_s.jpg" title="{{ htmlspecialchars(@item.title) }}" /></a>
+                    </dd>
+                </F3:repeat>
+            </dl>
+        </div>
+        <F3:check if="{{ !@ajax}}">
+            <F3:true>
+                <F3:include href="tools/pagination.htm"/>
+            </F3:true>
+        </F3:check>
+	</F3:true>
+    <F3:false><div id="page_results"></div><div class="pagination center" id="pagination"></div></F3:false>
+</F3:check>

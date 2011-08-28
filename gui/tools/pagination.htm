@@ -1,0 +1,22 @@
+<div class="pagination center" id="pagination">
+    <a href="{{ @BASE }}?keyword={{ @GET.keyword }}" title="First page" id="page_first" page="1">&lt;&lt;</a>
+    
+    <F3:check if="{{ @results.photos.page > 1 }}">
+        <F3:true><a href="{{ @BASE }}?keyword={{ @GET.keyword }}&page={{ @results.photos.page - 1 }}" title="Previous page" id="page_prev" page="{{ @results.photos.page - 1 }}">&lt;</a></F3:true>
+        <F3:false><a href="{{ @BASE }}?keyword={{ @GET.keyword }}&page={{ @results.photos.page - 1 }}" title="Previous page" id="page_prev" page="1">&lt;</a></F3:false>
+    </F3:check>
+    
+    Page <span id="page_number">{{ @results.photos.page }}</span> of {{ @results.photos.pages }}
+    
+    <F3:check if="{{ @results.photos.page < @results.photos.pages }}">
+        <F3:true><a href="{{ @BASE }}?keyword={{ @GET.keyword }}&page={{ @results.photos.page + 1 }}" title="Next page" id="page_next" page="{{ @results.photos.page + 1 }}">&gt;</a></F3:true>
+        <F3:false><a href="{{ @BASE }}?keyword={{ @GET.keyword }}&page={{ @results.photos.page + 1 }}" title="Next page" id="page_next" page="{{ @results.photos.pages }}">&gt;</a></F3:false>
+    </F3:check>
+    
+    <F3:check if="{{ @results.photos.page < @results.photos.total }}">
+        <F3:true>
+            <a href="{{ @BASE }}?keyword={{ @GET.keyword }}&page={{ @results.photos.total}}" title="Last page" id="page_last" page="{{ @results.photos.pages}}">&gt;&gt;</a>
+        </F3:true>
+        <F3:false>&gt;&gt;</F3:false>
+    </F3:check>
+</div>

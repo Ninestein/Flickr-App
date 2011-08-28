@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo ($_ENCODING=F3::get('ENCODING')); ?>"/>
+	<link rel="stylesheet" type="text/css" href="<?php echo ($_BASE=F3::get('BASE')); ?>/min?base=<?php echo ($_GUI=F3::get('GUI')); ?>css/&amp;files=reset.css,flickr.css,slimbox2.css"/>
+    
+	<title><?php echo ($_site=F3::get('site')); ?></title>
+    <script language="javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script language="javascript" src="/script/slimbox2.js"></script>
+    <script language="javascript" src="/script/script.js"></script>
+</head>
+<body>
+	<div id="header">
+		<h1><?php echo $_site; ?></h1>
+	</div>
+	<div id="content">
+		<?php if (!($_ajax=F3::get('ajax'))): ?>
+    
+        <form name="flickr_search" id="flickr_search" method="get" action="<?php echo $_BASE; ?>" >
+            <?php if (($_message=F3::get('message'))): ?>
+                <p><span class="fail"><?php echo $_message; ?></span></p>
+            <?php endif; ?>
+            <label for="keyword">Keyword</label>
+            <input type="text" name="keyword" id="keyword" value="<?php echo htmlspecialchars(F3::get('GET.keyword')); ?>" size="60"/> <input type="submit" value="Submit"/>
+        </form><p />
+	<?php endif; ?>
+
+<?php if (($_results=F3::get('results'))): ?>
+	
+    	<div id="page_results">
+            <dl>
+                <?php foreach (($_results['photos']['photo']?:array()) as $_key=>$_item): ?>
+                    <dt><h2 class="title"><?php echo htmlspecialchars($_item['title']); ?></h2></dt>
+                    <dd>
+                    	<a href="http://www.flickr.com/photos/<?php echo $_item['owner']; ?>/<?php echo $_item['id']; ?>/" title="<?php echo htmlspecialchars($_item['title']); ?>" rel="Lightbox-flickr" target="_blank"><img src="http://farm<?php echo $_item['farm']; ?>.static.flickr.com/<?php echo $_item['server']; ?>/<?php echo $_item['id']; ?>_<?php echo $_item['secret']; ?>_s.jpg" title="<?php echo htmlspecialchars($_item['title']); ?>" /></a>
+                    </dd>
+                <?php endforeach; ?>
+            </dl>
+        </div>
+        <?php if (!($_ajax=F3::get('ajax'))): ?>
+            
+                <div class="pagination center" id="pagination">
+    <a href="<?php echo $_BASE; ?>?keyword=<?php echo F3::get('GET.keyword'); ?>" title="First page" id="page_first" page="1">&lt;&lt;</a>
+    
+    <?php if ($_results['photos']['page'] > 1): ?>
+        <a href="<?php echo $_BASE; ?>?keyword=<?php echo F3::get('GET.keyword'); ?>&page=<?php echo $_results['photos']['page'] - 1; ?>" title="Previous page" id="page_prev" page="<?php echo $_results['photos']['page'] - 1; ?>">&lt;</a>
+        <?php else: ?><a href="<?php echo $_BASE; ?>?keyword=<?php echo F3::get('GET.keyword'); ?>&page=<?php echo $_results['photos']['page'] - 1; ?>" title="Previous page" id="page_prev" page="1">&lt;</a>
+    <?php endif; ?>
+    
+    Page <span id="page_number"><?php echo $_results['photos']['page']; ?></span> of <?php echo $_results['photos']['pages']; ?>
+    
+    <?php if ($_results['photos']['page'] < $_results['photos']['pages']): ?>
+        <a href="<?php echo $_BASE; ?>?keyword=<?php echo F3::get('GET.keyword'); ?>&page=<?php echo $_results['photos']['page'] + 1; ?>" title="Next page" id="page_next" page="<?php echo $_results['photos']['page'] + 1; ?>">&gt;</a>
+        <?php else: ?><a href="<?php echo $_BASE; ?>?keyword=<?php echo F3::get('GET.keyword'); ?>&page=<?php echo $_results['photos']['page'] + 1; ?>" title="Next page" id="page_next" page="<?php echo $_results['photos']['pages']; ?>">&gt;</a>
+    <?php endif; ?>
+    
+    <?php if ($_results['photos']['page'] < $_results['photos']['total']): ?>
+        
+            <a href="<?php echo $_BASE; ?>?keyword=<?php echo F3::get('GET.keyword'); ?>&page=<?php echo $_results['photos']['total']; ?>" title="Last page" id="page_last" page="<?php echo $_results['photos']['pages']; ?>">&gt;&gt;</a>
+        
+        <?php else: ?>&gt;&gt;
+    <?php endif; ?>
+</div>
+            
+        <?php endif; ?>
+	
+    <?php else: ?><div id="page_results"></div><div class="pagination center" id="pagination"></div>
+<?php endif; ?>
+	</div>
+	<div id="footer">
+		<p class="center">This site is built by <a href="http://gregory-brine.com/">Gregory Brine</a></p>
+	</div>
+</body>
+</html>
